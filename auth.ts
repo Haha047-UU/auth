@@ -50,7 +50,7 @@ const config = {
   providers: [
     GitHub,
   ],
-  basePath: "/api/auth",
+  basePath: "/auth",
   callbacks: {
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl
