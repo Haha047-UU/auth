@@ -48,9 +48,7 @@ const config = {
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: UnstorageAdapter(storage),
   providers: [
-    GitHubProvider({
-      clientId: process.env.AUTH_GITHUB_ID
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    GitHub({
       authorizationUrl: "https://github.com/login/oauth/authorize",
       tokenUrl: "https://github.com/login/oauth/access_token",
       scope: "user:email", // 请求访问用户邮箱的权限
