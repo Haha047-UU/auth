@@ -48,11 +48,7 @@ const config = {
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: UnstorageAdapter(storage),
   providers: [
-    GitHub({
-      authorizationUrl: "https://github.com/login/oauth/authorize",
-      tokenUrl: "https://github.com/login/oauth/access_token",
-      scope: "user:email", // 请求访问用户邮箱的权限
-    }),
+    GitHub
   ],
   basePath: "/api/auth",
   callbacks: {
