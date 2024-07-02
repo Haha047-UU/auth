@@ -4,7 +4,6 @@ import "next-auth/jwt"
 import Apple from "next-auth/providers/apple"
 import Auth0 from "next-auth/providers/auth0"
 import AzureB2C from "next-auth/providers/azure-ad-b2c"
-import BankIDNorway from "next-auth/providers/bankid-no"
 import BoxyHQSAML from "next-auth/providers/boxyhq-saml"
 import Cognito from "next-auth/providers/cognito"
 import Coinbase from "next-auth/providers/coinbase"
@@ -38,10 +37,10 @@ import type { NextAuthConfig } from "next-auth"
 const storage = createStorage({
   driver: process.env.VERCEL
     ? vercelKVDriver({
-        url: process.env.AUTH_KV_REST_API_URL,
-        token: process.env.AUTH_KV_REST_API_TOKEN,
-        env: false,
-      })
+      url: process.env.AUTH_KV_REST_API_URL,
+      token: process.env.AUTH_KV_REST_API_TOKEN,
+      env: false,
+    })
     : memoryDriver(),
 })
 
@@ -56,7 +55,6 @@ const config = {
       clientSecret: process.env.AUTH_AZURE_AD_B2C_SECRET,
       issuer: process.env.AUTH_AZURE_AD_B2C_ISSUER,
     }),
-    BankIDNorway,
     BoxyHQSAML({
       clientId: "dummy",
       clientSecret: "dummy",
