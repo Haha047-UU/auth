@@ -1,9 +1,38 @@
 import NextAuth from "next-auth"
+import "next-auth/jwt"
 
+import Apple from "next-auth/providers/apple"
+import AzureB2C from "next-auth/providers/azure-ad-b2c"
+import BoxyHQSAML from "next-auth/providers/boxyhq-saml"
+import Cognito from "next-auth/providers/cognito"
+import Coinbase from "next-auth/providers/coinbase"
+import Discord from "next-auth/providers/discord"
+import Dropbox from "next-auth/providers/dropbox"
+import Facebook from "next-auth/providers/facebook"
+import GitHub from "next-auth/providers/github"
+import GitLab from "next-auth/providers/gitlab"
+import Google from "next-auth/providers/google"
+import Hubspot from "next-auth/providers/hubspot"
+import Keycloak from "next-auth/providers/keycloak"
+import LinkedIn from "next-auth/providers/linkedin"
+import Netlify from "next-auth/providers/netlify"
+import Okta from "next-auth/providers/okta"
+import Passage from "next-auth/providers/passage"
+import Passkey from "next-auth/providers/passkey"
+import Pinterest from "next-auth/providers/pinterest"
+import Reddit from "next-auth/providers/reddit"
+import Slack from "next-auth/providers/slack"
+import Spotify from "next-auth/providers/spotify"
+import Twitch from "next-auth/providers/twitch"
+import Twitter from "next-auth/providers/twitter"
+import WorkOS from "next-auth/providers/workos"
+import Zoom from "next-auth/providers/zoom"
+import { createStorage } from "unstorage"
+import memoryDriver from "unstorage/drivers/memory"
+import vercelKVDriver from "unstorage/drivers/vercel-kv"
+import { UnstorageAdapter } from "@auth/unstorage-adapter"
 import type { NextAuthConfig } from "next-auth"
-import Okta from "@auth/core/providers/okta";
 
-<<<<<<< HEAD
 const storage = createStorage({
   driver: process.env.VERCEL
     ? vercelKVDriver({
@@ -15,55 +44,49 @@ const storage = createStorage({
 })
 
 const config = {
-  theme: {
-    logo: "https://authjs.dev/img/logo-sm.png"
-  },
+  theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: UnstorageAdapter(storage),
-=======
-export const config = {
-  theme: {
-    logo: "https://next-auth.js.org/img/logo/logo-sm.png",
-  },
->>>>>>> 470c84aaf7c7c5a2a77a1f4fef8554face941a38
   providers: [
-    Okta({
-      clientId: "myClientIdhere",
-      clientSecret: "mySecretHere",
-      issuer: "https://path.to.your.okta.instance.com/oauth2/default",
-      // Put in a an empty `state` because Next Auth doesn't appear to be specifying this
-      // properly, and Okta doesn't like a missing state param
-      authorization: "https://path.to.your.okta.instance.com/oauth2/default/v1/authorize?response_type=code&state=e30="
-    })
+    GitHub
   ],
-  session: {
-    strategy: "jwt",
-  },
-  debug: true,
+  basePath: "/api/auth",
   callbacks: {
-    session({ session, token }) {
-      console.log(`Auth Sess = ${JSON.stringify(session)}`)
-      console.log(`Auth Tok = ${JSON.stringify(token)}`)
-      if (token.access_token) {
-        session.access_token = token.access_token // Put the provider's access token in the session so that we can access it client-side and server-side with `auth()`
-      }
-      return session
-    },
-    jwt({ token, account, profile }) {
-      console.log(`Auth JWT Tok = ${JSON.stringify(token)}`)
-      console.log(`Router Auth JWT account = ${JSON.stringify(account)}`)
-
-      if (account) {
-        token.access_token = account.access_token // Store the provider's access token in the token so that we can put it in the session in the session callback above
-      }
-
-      return token
-    },
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl
       if (pathname === "/middleware-example") return !!auth
       return true
     },
-  }
+    jwt({ token, trigger, session, account }) {
+      if (trigger === "update") token.name = session.user.name
+      if (account?.provider === "keycloak") {
+        return { ...token, accessToken: account.access_token }
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken
+      }
+      return session
+    },
+  },
+  experimental: {
+    enableWebAuthn: true,
+  },
+  debug: process.env.NODE_ENV !== "production" ? true : false,
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)
+
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string
+  }
+}
+
