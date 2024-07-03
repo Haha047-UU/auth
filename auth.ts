@@ -37,8 +37,8 @@ import type { NextAuthConfig } from "next-auth"
 const storage = createStorage({
   driver: process.env.VERCEL
     ? vercelKVDriver({
-      url: "https://relieved-jennet-56255.upstash.io",
-      token: "Adu_AAIncDFlZTRiMDAyODM0ZTA0NWEzYmI3Mzg1YTY1Y2U0NDQ3NHAxNTYyNTU",
+      url: process.env.AUTH_KV_REST_API_URL,
+      token: process.env.AUTH_KV_REST_API_TOKEN,
       env: false,
     })
     : memoryDriver(),
