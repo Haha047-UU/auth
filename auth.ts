@@ -53,7 +53,7 @@ const config = {
   callbacks: {
     session({ session, token }) {
       if (token.access_token) {
-        session.access_token = token.access_token // Put the provider's access token in the session so that we can access it client-side and server-side with `auth()`
+        session.access_token = token.access_token as string; // Put the provider's access token in the session so that we can access it client-side and server-side with `auth()`
       }
       return session
     },
