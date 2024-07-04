@@ -51,23 +51,28 @@ const config = {
   ],
   basePath: "/api/auth",
   callbacks: {
+    session({ session, token }) {
+      console.log(`Auth Sess = ${JSON.stringify(session)}`)
+      console.log(`Auth Tok = ${JSON.stringify(token)}`)
+      if (token.access_token) {
+        session.access_token = token.access_token // Put the provider's access token in the session so that we can access it client-side and server-side with `auth()`
+      }
+      return session
+    },
+    jwt({ token, account, profile }) {
+      console.log(`Auth JWT Tok = ${JSON.stringify(token)}`)
+      console.log(`Router Auth JWT account = ${JSON.stringify(account)}`)
+
+      if (account) {
+        token.access_token = account.access_token // Store the provider's access token in the token so that we can put it in the session in the session callback above
+      }
+
+      return token
+    },
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl
       if (pathname === "/middleware-example") return !!auth
       return true
-    },
-    jwt({ token, trigger, session, account }) {
-      if (trigger === "update") token.name = session.user.name
-      if (account?.provider === "keycloak") {
-        return { ...token, accessToken: account.access_token }
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken
-      }
-      return session
     },
   },
   experimental: {
@@ -89,4 +94,3 @@ declare module "next-auth/jwt" {
     accessToken?: string
   }
 }
-
