@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import "next-auth/jwt"
 
 import Apple from "next-auth/providers/apple"
-import Auth0 from "next-auth/providers/auth0"
 import AzureB2C from "next-auth/providers/azure-ad-b2c"
 import BoxyHQSAML from "next-auth/providers/boxyhq-saml"
 import Cognito from "next-auth/providers/cognito"
@@ -37,8 +36,8 @@ import type { NextAuthConfig } from "next-auth"
 const storage = createStorage({
   driver: process.env.VERCEL
     ? vercelKVDriver({
-      url: "https://relieved-jennet-56255.upstash.io",
-      token: "Adu_AAIncDFlZTRiMDAyODM0ZTA0NWEzYmI3Mzg1YTY1Y2U0NDQ3NHAxNTYyNTU",
+      url: process.env.KV_REST_API_URL,
+      token: process.env.KV_REST_API_TOKEN,
       env: false,
     })
     : memoryDriver(),
@@ -51,42 +50,32 @@ const config = {
     GitHub
   ],
   basePath: "/api/auth",
+  session: {
+    strategy: "jwt",
+  },
+  debug: true,
   callbacks: {
+    session({ session, token }) {
+      if (token.access_token) {
+        session.access_token = token.access_token as string;
+      }
+      console.log("session:", token);
+      return session
+    },
+    jwt({ token, account, profile }) {
+      console.log("JWT:", token);
+
+      if (account) {
+        token.access_token = account.access_token;// Store the provider's access token in the token so that we can put it in the session in the session callback above
+      }
+      return token
+    },
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl
       if (pathname === "/middleware-example") return !!auth
       return true
     },
-    jwt({ token, trigger, session, account }) {
-      if (trigger === "update") token.name = session.user.name
-      if (account?.provider === "keycloak") {
-        return { ...token, accessToken: account.access_token }
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken
-      }
-      return session
-    },
   },
-  experimental: {
-    enableWebAuthn: true,
-  },
-  debug: process.env.NODE_ENV !== "production" ? true : false,
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)
-
-declare module "next-auth" {
-  interface Session {
-    accessToken?: string
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken?: string
-  }
-}
