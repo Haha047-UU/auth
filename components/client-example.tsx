@@ -87,7 +87,7 @@ export default function ClientExample() {
         </p>
         <div className="flex flex-col">
           <Button
-            disabled={!session?.accessToken}
+            disabled={!session?.access_token}
             onClick={makeRequestWithToken}
           >
             Make API Request
