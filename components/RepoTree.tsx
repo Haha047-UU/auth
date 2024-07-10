@@ -1,49 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface TreeNode {
+  sha: string;
   path: string;
-  type: string;
+  type: 'blog' | 'tree';
+  content?: string; // 仅当 type 为 'blog' 时存在
   children?: TreeNode[];
 }
-// 定义组件的属性接口
+
 interface RepoTreeProps {
-  tree: TreeNode;
-  onFileClick: (path: string) => Promise<void>;
+  tree: TreeNode[];
+  onFileClick: (path: string, content: string | undefined) => void;
 }
 
 const RepoTree: React.FC<RepoTreeProps> = ({ tree, onFileClick }) => {
-  // 用于跟踪哪些节点是展开的
-  const [expandedPaths, setExpandedPaths] = useState<string[]>([]);
+  const renderTreeNode = (node: TreeNode, isRoot = false): React.ReactNode => {
+    // 如果是根节点，不显示路径
+    const displayPath = isRoot ? '' : node.path;
 
-  const toggleNode = (path: string) => {
-    setExpandedPaths(prevExpandedPaths => {
-      if (prevExpandedPaths.includes(path)) {
-        return prevExpandedPaths.filter(p => p !== path);
-      } else {
-        return [...prevExpandedPaths, path];
-      }
-    });
-  };
-
-  const renderNode = (node: TreeNode) => {
     return (
-      <div key={node.path}>
-        <div onClick={() => onFileClick(node.path)}>
-          {node.path} ({node.type})
-        </div>
-        {node.children && expandedPaths.includes(node.path) && (
-          <div>
-            {node.children.map(child => renderNode(child))}
-          </div>
+      <li key={node.sha}>
+        <span
+          onClick={() => {
+            if (node.type === 'blog') {
+              onFileClick(node.path, node.content);
+            }
+          }}
+          style={{ cursor: node.type === 'blog' ? 'pointer' : 'default' }}
+        >
+          {displayPath}
+        </span>
+        {node.type === 'tree' && (
+          <ul>
+            {node.children &&
+              node.children.map((child) => renderTreeNode(child))}
+          </ul>
         )}
-      </div>
+      </li>
     );
   };
 
   return (
-    <div>
-      {renderNode(tree)}
-    </div>
+    <ul>{tree.map((node) => renderTreeNode(node, true))}</ul>
   );
 };
 
