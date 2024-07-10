@@ -124,6 +124,9 @@ const GithubExplorer: React.FC = () => {
           {!isLoading && treeData && (
             <RepoTree tree={treeData} onFileClick={fetchFileContent} />
           )}
+          {
+            selectedFileContent
+          }
         </div>
       </div>
     </div>
