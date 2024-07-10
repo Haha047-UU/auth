@@ -3,6 +3,7 @@
 // app/components/GithubExplorer.tsx
 import React, { useState, useEffect } from 'react';
 import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
+import RepoTree from "./RepoTree"
 
 
 interface Repo {
@@ -120,7 +121,9 @@ const GithubExplorer: React.FC = () => {
         <div className="w-2/3">
           <h2 className="text-xl font-bold mb-2">Repository Tree</h2>
           {isLoading && <div>Loading tree...</div>}
-          {!isLoading && treeData}
+          {!isLoading && treeData && (
+            <RepoTree tree={treeData} onFileClick={fetchFileContent} />
+          )}
         </div>
       </div>
     </div>
