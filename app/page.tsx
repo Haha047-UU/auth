@@ -14,9 +14,13 @@ export default async function Index() {
         <CustomLink href="/server-example" className="underline">
           Server
         </CustomLink>{" "}
-        and the{" "}
+        ,{" "}
         <CustomLink href="/client-example" className="underline">
           Client
+        </CustomLink>{" "}
+        and the{" "}
+        <CustomLink href="/github-example" className="underline">
+          Explorer
         </CustomLink>{" "}
         examples to see how to secure pages and get session data.
       </div>
