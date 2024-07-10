@@ -8,9 +8,11 @@ export default async function Page() {
     <div className="space-y-2">
       <h1 className="text-3xl font-bold">React Server Component Usage</h1>
       <p>
-        This is an example site to demonstrate how to use{" "}
-        <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
-        for authentication.
+        This page is an example of how to use the GithubExplorer component. This component use the{" "}
+        <CustomLink href="https://github.com/octokit/octokit.js/#readme">
+          <code>octokit</code>
+        </CustomLink>{" "}
+        library to fetch data from the Github API.
       </p>
       <GithubExplorer />
     </div>
