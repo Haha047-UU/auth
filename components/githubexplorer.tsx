@@ -126,11 +126,7 @@ const GithubExplorer: React.FC = () => {
           {!isLoading && treeData && (
             <RepoTree tree={treeData} onFileClick={fetchFileContent} />
           )}
-          {selectedFileContent && (
-            <MDXEditor
-              markdown={selectedFileContent} plugins={[headingsPlugin(), listsPlugin(), quotePlugin(), thematicBreakPlugin()]}
-            />
-          )}
+          {selectedFileContent}
         </div>
       </div>
     </div>
