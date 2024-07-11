@@ -6,7 +6,6 @@ import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/gith
 import RepoTree from "./RepoTree";
 import { ForwardRefEditor } from "../app/api/ForwardRefEditor";
 import '@mdxeditor/editor/style.css'
-import { MDXEditor, headingsPlugin, listsPlugin, quotePlugin, thematicBreakPlugin } from '@mdxeditor/editor'
 
 interface Repo {
   name: string;
@@ -126,7 +125,11 @@ const GithubExplorer: React.FC = () => {
           {!isLoading && treeData && (
             <RepoTree tree={treeData} onFileClick={fetchFileContent} />
           )}
-          {selectedFileContent}
+          {(selectedFileContent &&
+            <ForwardRefEditor
+              markdown={selectedFileContent}
+            />
+          )}
         </div>
       </div>
     </div>
