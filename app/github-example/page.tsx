@@ -1,5 +1,5 @@
 import CustomLink from "@/components/custom-link"
-import GithubExplorer from "@/components/GithubExplorer"
+import GithubExplorer from "@/components/githubexplorer"
 import { auth } from "auth"
 
 export default async function Page() {
