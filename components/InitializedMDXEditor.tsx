@@ -14,7 +14,6 @@ import {
   type MDXEditorProps
 } from '@mdxeditor/editor'
 
-
 export default function InitializedMDXEditor({
   editorRef,
   ...props
