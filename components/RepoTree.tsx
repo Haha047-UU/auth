@@ -1,48 +1,65 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
+import { FaFolder, FaFolderOpen, FaFile } from 'react-icons/fa';
 
 interface TreeNode {
-  sha: string;
   path: string;
   type: 'blob' | 'tree';
-  content?: string; // 仅当 type 为 'blob' 时存在
   children?: TreeNode[];
 }
 
 interface RepoTreeProps {
-  tree: TreeNode[];
-  onFileClick: (path: string, content: string | undefined) => void;
+  tree: TreeNode;
+  onFileClick: (path: string) => void;
 }
 
 const RepoTree: React.FC<RepoTreeProps> = ({ tree, onFileClick }) => {
-  const renderTreeNode = (node: TreeNode, isRoot = false): React.ReactNode => {
-    // 如果是根节点，不显示路径
-    const displayPath = isRoot ? '' : node.path;
+  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
+
+  const toggleExpand = (path: string) => {
+    setExpanded(prev => ({ ...prev, [path]: !prev[path] }));
+  }
+
+  const renderTree = (node: TreeNode, level: number = 0, isLast: boolean = true) => {
+    const isExpanded = expanded[node.path];
+    const hasChildren = node.type === 'tree';
 
     return (
-      <li key={node.sha}>
-        <span
-          onClick={() => {
-            if (node.type === 'blob') {
-              onFileClick(node.path, node.content);
-            }
-          }}
-          style={{ cursor: node.type === 'blob' ? 'pointer' : 'default' }}
-        >
-          {displayPath}
-        </span>
-        {node.type === 'tree' && (
-          <ul>
-            {node.children &&
-              node.children.map((child) => renderTreeNode(child))}
-          </ul>
+      <div key={node.path} className="relative">
+        <div className="flex items-center py-1">
+          {level > 0 && (
+            <>
+              {[...Array(level - 1)].map((_, i) => (
+                <div key={i} className="w-6 h-6 border-l border-gray-300"></div>
+              ))}
+              <div className={`w-6 h-6 border-l ${isLast ? 'border-b' : ''} border-gray-300`}></div>
+            </>
+          )}
+          <div
+            onClick={() => hasChildren ? toggleExpand(node.path) : onFileClick(node.path)}
+            className={`flex items-center ${hasChildren ? 'cursor-pointer' : ''}`}
+          >
+            <span className="mr-2 text-blue-500">
+              {hasChildren ? (isExpanded ? <FaFolderOpen /> : <FaFolder />) : <FaFile />}
+            </span>
+            <span className="text-gray-800 hover:text-blue-600 transition-colors">
+              {node.path.split('/').pop()}
+            </span>
+          </div>
+        </div>
+        {hasChildren && isExpanded && node.children && (
+          <div className="ml-6">
+            {node.children.map((child, index) =>
+              renderTree(child, level + 1, index === node.children!.length - 1)
+            )}
+          </div>
         )}
-      </li>
+      </div>
     );
   };
 
-  return (
-    <ul>{tree.map((node) => renderTreeNode(node, true))}</ul>
-  );
+  return <div className='font-mono text-sm'>{renderTree(tree)}</div>;
 };
 
 export default RepoTree;
