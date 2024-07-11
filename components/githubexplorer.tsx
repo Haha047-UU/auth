@@ -104,19 +104,7 @@ const GithubExplorer: React.FC = () => {
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <div className="flex">
-        <div className="w-2/3 pr-4">
-          <h2 className="text-xl font-bold mb-2">Repository Tree</h2>
-          {isLoading && <div>Loading tree...</div>}
-          {!isLoading && treeData && (
-            <RepoTree tree={treeData} onFileClick={fetchFileContent} />
-          )}
-          {selectedFileContent && (
-            <ForwardRefEditor
-              markdown={selectedFileContent}
-            />
-          )}
-        </div>
-        <div className="w-1/3">
+        <div className="w-1/3 pr-4">
           <h2 className="text-xl font-bold mb-2">Repositories</h2>
           <ul>
             {repos.map((repo) => (
@@ -129,6 +117,18 @@ const GithubExplorer: React.FC = () => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="w-2/3">
+          <h2 className="text-xl font-bold mb-2">Repository Tree</h2>
+          {isLoading && <div>Loading tree...</div>}
+          {!isLoading && treeData && (
+            <RepoTree tree={treeData} onFileClick={fetchFileContent} />
+          )}
+          {selectedFileContent && (
+            <ForwardRefEditor
+              markdown={selectedFileContent}
+            />
+          )}
         </div>
       </div>
     </div>
