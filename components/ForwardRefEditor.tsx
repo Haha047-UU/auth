@@ -7,7 +7,7 @@ import {
   type MDXEditorProps
 } from '@mdxeditor/editor'
 
-const Editor = dynamic(() => import('@/components/InitializedMDXEditor'), {
+const Editor = dynamic(() => import('./InitializedMDXEditor'), {
   ssr: false
 })
 

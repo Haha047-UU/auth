@@ -8,6 +8,7 @@ import {
   thematicBreakPlugin,
   markdownShortcutPlugin,
   codeBlockPlugin,
+  linkPlugin,
   MDXEditor,
   type MDXEditorMethods,
   type MDXEditorProps
@@ -27,6 +28,7 @@ export default function InitializedMDXEditor({
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
         codeBlockPlugin(),
+        linkPlugin(),
       ]}
       {...props}
       ref={editorRef}

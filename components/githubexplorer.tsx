@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
 import RepoTree from "./RepoTree";
-import { ForwardRefEditor } from "../app/api/ForwardRefEditor";
+import { ForwardRefEditor } from "./ForwardRefEditor";
 import '@mdxeditor/editor/style.css'
 
 interface Repo {
