@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "@auth/unstorage-adapter": "^2.0.0",
+    "@mdxeditor/editor": "^3.8.0",
     "@octokit/rest": "^21.0.0",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
