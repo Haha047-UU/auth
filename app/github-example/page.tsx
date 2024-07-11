@@ -1,5 +1,5 @@
 import CustomLink from "@/components/custom-link"
-import GithubExplorer from "@/components/githubexplorer"
+import GithubExplorer from "@/components/GithubExplorer"
 import { auth } from "auth"
 
 export default async function Page() {
@@ -12,7 +12,11 @@ export default async function Page() {
         <CustomLink href="https://github.com/octokit/octokit.js/#readme">
           <code>octokit</code>
         </CustomLink>{" "}
-        library to fetch data from the Github API.
+        library to fetch data from the Github API.You can click{" "}
+        <CustomLink href="https://auth.zhzh118.com">
+          next-auth
+        </CustomLink>{" "}
+        to return to the home page.
       </p>
       <GithubExplorer />
     </div>
