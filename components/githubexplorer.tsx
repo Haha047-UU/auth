@@ -6,7 +6,7 @@ import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/gith
 import RepoTree from "./RepoTree";
 import { ForwardRefEditor } from "../app/api/ForwardRefEditor";
 import '@mdxeditor/editor/style.css'
-import { MDXEditor, headingsPlugin } from '@mdxeditor/editor'
+import { MDXEditor, headingsPlugin, listsPlugin, quotePlugin, thematicBreakPlugin } from '@mdxeditor/editor'
 
 interface Repo {
   name: string;
@@ -128,7 +128,7 @@ const GithubExplorer: React.FC = () => {
           )}
           {selectedFileContent && (
             <MDXEditor
-              markdown={selectedFileContent} plugins={[headingsPlugin()]}
+              markdown={selectedFileContent} plugins={[headingsPlugin(), listsPlugin(), quotePlugin(), thematicBreakPlugin()]}
             />
           )}
         </div>
