@@ -3,8 +3,8 @@ import React from 'react';
 interface TreeNode {
   sha: string;
   path: string;
-  type: 'blog' | 'tree';
-  content?: string; // 仅当 type 为 'blog' 时存在
+  type: 'blob' | 'tree';
+  content?: string; // 仅当 type 为 'blob' 时存在
   children?: TreeNode[];
 }
 
@@ -22,11 +22,11 @@ const RepoTree: React.FC<RepoTreeProps> = ({ tree, onFileClick }) => {
       <li key={node.sha}>
         <span
           onClick={() => {
-            if (node.type === 'blog') {
+            if (node.type === 'blob') {
               onFileClick(node.path, node.content);
             }
           }}
-          style={{ cursor: node.type === 'blog' ? 'pointer' : 'default' }}
+          style={{ cursor: node.type === 'blob' ? 'pointer' : 'default' }}
         >
           {displayPath}
         </span>
