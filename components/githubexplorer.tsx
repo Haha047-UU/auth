@@ -4,8 +4,8 @@
 import React, { useState, useEffect } from 'react';
 import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
 import RepoTree from "./RepoTree";
-import { ForwardRefEditor } from "./ForwardRefEditor";
 import '@mdxeditor/editor/style.css'
+import { ForwardRefEditor } from './ForwardRefEditor';
 
 interface Repo {
   name: string;
@@ -126,9 +126,7 @@ const GithubExplorer: React.FC = () => {
             <RepoTree tree={treeData} onFileClick={fetchFileContent} />
           )}
           {(selectedFileContent &&
-            <ForwardRefEditor
-              markdown={selectedFileContent}
-            />
+            <ForwardRefEditor markdown={selectedFileContent} />
           )}
         </div>
       </div>

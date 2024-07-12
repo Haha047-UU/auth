@@ -6,6 +6,7 @@ import {
   type MDXEditorMethods,
   type MDXEditorProps
 } from '@mdxeditor/editor'
+import '@mdxeditor/editor/style.css'
 
 const Editor = dynamic(() => import('./InitializedMDXEditor'), {
   ssr: false

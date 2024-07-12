@@ -11,10 +11,9 @@ import {
   linkPlugin,
   MDXEditor,
   type MDXEditorMethods,
-  type MDXEditorProps
+  type MDXEditorProps,
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
-
 
 export default function InitializedMDXEditor({
   editorRef,
@@ -22,6 +21,7 @@ export default function InitializedMDXEditor({
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
   return (
     <MDXEditor
+      onChange={console.log}
       plugins={[
         headingsPlugin(),
         listsPlugin(),
