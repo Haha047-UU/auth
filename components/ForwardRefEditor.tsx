@@ -3,8 +3,8 @@
 import dynamic from 'next/dynamic'
 import { forwardRef } from 'react'
 import {
-  type MDXEditorMethods,
-  type MDXEditorProps
+  MDXEditorMethods,
+  MDXEditorProps
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
 
