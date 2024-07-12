@@ -13,6 +13,8 @@ import {
   type MDXEditorMethods,
   type MDXEditorProps
 } from '@mdxeditor/editor'
+import '@mdxeditor/editor/style.css'
+
 
 export default function InitializedMDXEditor({
   editorRef,
