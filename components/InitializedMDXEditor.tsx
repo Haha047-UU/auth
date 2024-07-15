@@ -15,6 +15,12 @@ import {
   toolbarPlugin,
   type MDXEditorMethods,
   type MDXEditorProps,
+  DiffSourceToggleWrapper,
+  ListsToggle,
+  Separator,
+  BlockTypeSelect,
+  CreateLink,
+  InsertImage,
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
 
@@ -29,9 +35,16 @@ export default function InitializedMDXEditor({
         toolbarPlugin({
           toolbarContents: () => (
             <>
-              {' '}
-              <UndoRedo />
-              <BoldItalicUnderlineToggles />
+              <DiffSourceToggleWrapper>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <ListsToggle />
+                <Separator />
+                <BlockTypeSelect />
+                <CreateLink />
+                <InsertImage />
+                <Separator />
+              </DiffSourceToggleWrapper>
             </>
           )
         }),
