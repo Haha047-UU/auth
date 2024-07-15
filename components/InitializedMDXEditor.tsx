@@ -10,6 +10,9 @@ import {
   codeBlockPlugin,
   linkPlugin,
   MDXEditor,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
   type MDXEditorMethods,
   type MDXEditorProps,
 } from '@mdxeditor/editor'
@@ -23,6 +26,15 @@ export default function InitializedMDXEditor({
     <MDXEditor
       onChange={console.log}
       plugins={[
+        toolbarPlugin({
+          toolbarContents: () => (
+            <>
+              {' '}
+              <UndoRedo />
+              <BoldItalicUnderlineToggles />
+            </>
+          )
+        }),
         headingsPlugin(),
         listsPlugin(),
         quotePlugin(),
