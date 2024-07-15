@@ -19,10 +19,10 @@ import {
   ListsToggle,
   Separator,
   BlockTypeSelect,
+  KitchenSinkToolbar,
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
 import React from 'react'
-import { Subscript, Superscript } from 'lucide-react'
 
 export default function InitializedMDXEditor({
   editorRef,
@@ -33,24 +33,7 @@ export default function InitializedMDXEditor({
       <MDXEditor
         onChange={console.log}
         plugins={[
-          toolbarPlugin({
-            toolbarContents: () => (
-              <>
-                <DiffSourceToggleWrapper>
-                  <UndoRedo />
-                  <Separator />
-                  <BoldItalicUnderlineToggles />
-                  <Separator />
-                  <Superscript />
-                  <Subscript />
-                  <Separator />
-                  <ListsToggle />
-                  <Separator />
-                  <BlockTypeSelect />
-                </DiffSourceToggleWrapper>
-              </>
-            )
-          }),
+          toolbarPlugin({ toolbarContents: () => <KitchenSinkToolbar /> }),
           headingsPlugin(),
           listsPlugin(),
           quotePlugin(),
