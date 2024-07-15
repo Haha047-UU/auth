@@ -19,26 +19,17 @@ import {
   ListsToggle,
   Separator,
   BlockTypeSelect,
-  CreateLink,
-  InsertImage,
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
 import React from 'react'
+import { Subscript, Superscript } from 'lucide-react'
 
 export default function InitializedMDXEditor({
   editorRef,
   ...props
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
-  const [outsideState, setOutsideState] = React.useState('foo')
   return (
     <>
-      <button
-        onClick={() => {
-          setOutsideState('bar')
-        }}
-      >
-        Toggle outside state
-      </button>
       <MDXEditor
         onChange={console.log}
         plugins={[
@@ -46,15 +37,16 @@ export default function InitializedMDXEditor({
             toolbarContents: () => (
               <>
                 <DiffSourceToggleWrapper>
-                  {outsideState}
                   <UndoRedo />
+                  <Separator />
                   <BoldItalicUnderlineToggles />
+                  <Separator />
+                  <Superscript />
+                  <Subscript />
+                  <Separator />
                   <ListsToggle />
                   <Separator />
                   <BlockTypeSelect />
-                  <CreateLink />
-                  <InsertImage />
-                  <Separator />
                 </DiffSourceToggleWrapper>
               </>
             )
