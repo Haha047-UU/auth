@@ -39,7 +39,7 @@ export default function InitializedMDXEditor({
           quotePlugin(),
           thematicBreakPlugin(),
           markdownShortcutPlugin(),
-          codeBlockPlugin(),
+          codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
           linkPlugin(),
         ]}
         {...props}
