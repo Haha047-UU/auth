@@ -63,9 +63,9 @@ export default function InitializedMDXEditor({
           quotePlugin(),
           thematicBreakPlugin(),
           markdownShortcutPlugin(),
-          codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
+          codeBlockPlugin({ defaultCodeBlockLanguage: '' }),
           sandpackPlugin({ sandpackConfig: simpleSandpackConfig }),
-          codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'text', tsx: 'TypeScript' } }),
+          codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', txt: 'Plain Text', tsx: 'TypeScript', '': 'Unspecified' } }),
           linkPlugin(),
         ]}
         {...props}
