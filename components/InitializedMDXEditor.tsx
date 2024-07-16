@@ -48,7 +48,6 @@ const simpleSandpackConfig: SandpackConfig = {
   ]
 }
 
-const Ref = React.useRef<MDXEditorMethods>(null)
 
 export default function InitializedMDXEditor({
   editorRef,
@@ -56,8 +55,6 @@ export default function InitializedMDXEditor({
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
   return (
     <>
-      <button onClick={() => Ref.current?.setMarkdown('new markdown')}>Set new markdown</button>
-      <button onClick={() => console.log(Ref.current?.getMarkdown())}>Get markdown</button>
       <MDXEditor
         onChange={console.log}
         plugins={[
