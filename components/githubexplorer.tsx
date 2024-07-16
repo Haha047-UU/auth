@@ -130,7 +130,7 @@ const GithubExplorer: React.FC = () => {
           )}
           {(selectedFileContent &&
             <>
-              <button onClick={() => Ref.current?.setMarkdown('new markdown')} className="bg-blue-500 text-white p-2 rounded">Set new markdown</button>
+              <button onClick={() => Ref.current?.setMarkdown('new markdown')} className="bg-blue-500 text-white p-2 rounded mr-2">Set new markdown</button>
               <button onClick={() => console.log(Ref.current?.getMarkdown())} className="bg-blue-500 text-white p-2 rounded">Get markdown</button>
               <ForwardRefEditor markdown={selectedFileContent} />
             </>
