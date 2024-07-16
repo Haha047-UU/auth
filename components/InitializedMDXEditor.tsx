@@ -73,7 +73,7 @@ export default function InitializedMDXEditor({
           linkPlugin(),
         ]}
         {...props}
-        ref={Ref}
+        ref={editorRef}
       />
     </>
   )
