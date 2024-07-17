@@ -10,7 +10,7 @@ export async function getUserRepos(username: string) {  //根据提供的用户�
     per_page: 100
   });
 
-  const privateRepos = response.data.filter(repo => repo.private);
+  const privateRepos = response.data.filter(repo => !repo.private);
 
   return privateRepos;
 }
