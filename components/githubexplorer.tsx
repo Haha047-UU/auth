@@ -43,21 +43,31 @@ const GithubExplorer: React.FC = () => {
   };
 
   const fetchPrivateRepos = async () => {
+    console.log(`开始执行 fetchPrivateRepos`);
+
     if (username) {
       setIsLoading(true);
       setError(null);
+      console.log(`用户名称: ${username}`);
+
       try {
+        console.log(`尝试获取用户 ${username} 的私有仓库列表`);
         const repoData = await getUserPrivateRepos(username);
+        console.log(`成功获取到 ${repoData.length} 个仓库`);
         setRepos(repoData);
         setSelectedRepo(null);
         setTreeData(null);
         setSelectedFileContent(null);
       } catch (err) {
+        console.error(`获取私有仓库列表时发生错误: ${err}`);
         setError('Failed to fetch repositories');
-        console.error(err);
       } finally {
         setIsLoading(false);
+        console.log('fetchPrivateRepos 函数执行结束');
       }
+    } else {
+      console.log('用户名未定义，跳过仓库获取');
+      setError('Username is not defined');
     }
   };
 
