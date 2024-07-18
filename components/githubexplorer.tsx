@@ -129,7 +129,7 @@ const GithubExplorer: React.FC = () => {
           className="bg-blue-500 text-white p-2 rounded"
           disabled={isLoading}
         >
-          {isLoading ? 'Loading...' : 'Fetch Repos'}
+          {isLoading ? 'Loading...' : 'Fetch PrivateRepos'}
         </button>
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
