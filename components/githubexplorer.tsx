@@ -2,7 +2,7 @@
 
 // app/components/GithubExplorer.tsx
 import React, { useState, useEffect } from 'react';
-import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
+import { getUserRepos, getUserPrivateRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
 import RepoTree from "./RepoTree";
 import '@mdxeditor/editor/style.css'
 import { ForwardRefEditor } from './ForwardRefEditor';
@@ -29,6 +29,25 @@ const GithubExplorer: React.FC = () => {
       setError(null);
       try {
         const repoData = await getUserRepos(username);
+        setRepos(repoData);
+        setSelectedRepo(null);
+        setTreeData(null);
+        setSelectedFileContent(null);
+      } catch (err) {
+        setError('Failed to fetch repositories');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const fetchPrivateRepos = async () => {
+    if (username) {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const repoData = await getUserPrivateRepos(username);
         setRepos(repoData);
         setSelectedRepo(null);
         setTreeData(null);
@@ -100,6 +119,13 @@ const GithubExplorer: React.FC = () => {
         />
         <button
           onClick={fetchRepos}
+          className="bg-blue-500 text-white p-2 rounded mr-2"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Fetch Repos'}
+        </button>
+        <button
+          onClick={fetchPrivateRepos}
           className="bg-blue-500 text-white p-2 rounded"
           disabled={isLoading}
         >
