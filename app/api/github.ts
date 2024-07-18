@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import { error } from "console";
 
 const octokit = new Octokit({ auth: process.env.access_token });
 
@@ -14,16 +15,19 @@ export async function getUserRepos(username: string) {  //根据提供的用户�
 
 }
 
-
-export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
+export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的私有仓库列表。
   const response = await octokit.rest.repos.listForUser({
     username,
     type: 'owner',
     sort: 'updated',
     per_page: 100
-  });
+  }).catch(error => {
+    console.error(`获取私有仓库列表时发生错误: ${error}`);
+    throw new Error('Failed to fetch repositories');
+  });;
 
   const privateRepos = response.data.filter(repo => repo.private);
+  console.error(error);
   return privateRepos;
 
 }
