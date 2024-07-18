@@ -24,7 +24,7 @@ export async function getUserPrivateRepos(username: string) {  //根据提供的
   });
 
   const privateRepos = response.data.filter(repo => repo.private);
-  console.error(`错误是:${error}`);
+  console.log(`错误是:${error}`);
   return privateRepos;
 
 }
