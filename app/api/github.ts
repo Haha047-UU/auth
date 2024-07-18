@@ -1,5 +1,4 @@
 import { Octokit } from "@octokit/rest";
-import { error } from "console";
 
 const octokit = new Octokit({ auth: process.env.access_token });
 
@@ -16,17 +15,23 @@ export async function getUserRepos(username: string) {  //根据提供的用户�
 }
 
 export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的私有仓库列表。
-  const response = await octokit.rest.repos.listForUser({
-    username,
-    type: 'owner',
-    sort: 'updated',
-    per_page: 100
-  });
+  console.log(`开始获取用户 ${username} 的私有仓库列表`);
 
-  const privateRepos = response.data.filter(repo => repo.private);
-  console.log(`错误是:${error}`);
-  return privateRepos;
+  try {
+    const response = await octokit.rest.repos.listForUser({
+      username,
+      type: 'owner', // 获取用户拥有的仓库
+      sort: 'updated',
+      per_page: 100
+    });
 
+    const privateRepos = response.data.filter(repo => repo.private);
+    console.log(`成功获取到 ${privateRepos.length} 个私有仓库`);
+    return privateRepos;
+  } catch (error) {
+    console.error(`获取用户 ${username} 的私有仓库列表时发生错误: ${error}`);
+    throw error; // 重新抛出错误，以便调用者可以处理
+  }
 }
 
 export async function getRepoDefaultBranch(owner: string, repo: string) {//获取某个仓库的默认分支名称。owner：仓库的所有者，repo：仓库的名称
