@@ -2,7 +2,7 @@
 
 // app/components/GithubExplorer.tsx
 import React, { useState, useEffect } from 'react';
-import { getUserRepos, getUserPrivateRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
+import { getUserRepos, getRepoDefaultBranch, getRepoTree } from '../app/api/github';
 import RepoTree from "./RepoTree";
 import '@mdxeditor/editor/style.css'
 import { ForwardRefEditor } from './ForwardRefEditor';
@@ -40,35 +40,6 @@ const GithubExplorer: React.FC = () => {
       } finally {
         setIsLoading(false);
       }
-    }
-  };
-
-  const fetchPrivateRepos = async () => {
-    console.log(`开始执行 fetchPrivateRepos`);
-
-    if (username) {
-      setIsLoading(true);
-      setError(null);
-      console.log(`用户名称: ${username}`);
-
-      try {
-        console.log(`尝试获取用户 ${username} 的私有仓库列表`);
-        const repoData = await getUserPrivateRepos(username);
-        console.log(`成功获取到 ${repoData.length} 个仓库`);
-        setRepos(repoData);
-        setSelectedRepo(null);
-        setTreeData(null);
-        setSelectedFileContent(null);
-      } catch (err) {
-        console.error(`获取私有仓库列表时发生错误: ${err}`);
-        setError('Failed to fetch repositories');
-      } finally {
-        setIsLoading(false);
-        console.log('fetchPrivateRepos 函数执行结束');
-      }
-    } else {
-      console.log('用户名未定义，跳过仓库获取');
-      setError('Username is not defined');
     }
   };
 
@@ -134,13 +105,6 @@ const GithubExplorer: React.FC = () => {
           disabled={isLoading}
         >
           {isLoading ? 'Loading...' : 'Fetch Repos'}
-        </button>
-        <button
-          onClick={fetchPrivateRepos}
-          className="bg-blue-500 text-white p-2 rounded"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Loading...' : 'Fetch PrivateRepos'}
         </button>
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
