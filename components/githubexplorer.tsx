@@ -26,6 +26,7 @@ const GithubExplorer: React.FC = () => {
 
   const accessToken = process.env.access_token;
   const det = async () => {
+
     if (!accessToken) {
       window.location.href = '/login';
       return;

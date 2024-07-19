@@ -1,11 +1,8 @@
 import { Octokit } from "@octokit/rest";
+import { auth } from "@/auth"
 
-const accessToken = process.env.access_token;
-if (!accessToken) {
-  console.error("访问令牌未设置。请设置环境变量 'access_token'。");
-  process.exit(1); // 退出进程，防止进一步执行
-}
 const octokit = new Octokit({ auth: process.env.access_token });
+
 
 export async function getUserRepos(username: string) {
   const response = await octokit.rest.repos.listForUser({
