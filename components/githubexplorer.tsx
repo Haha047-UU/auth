@@ -101,7 +101,7 @@ const GithubExplorer: React.FC = () => {
         />
         <button
           onClick={fetchRepos}
-          className="bg-blue-500 text-white p-2 rounded mr-2"
+          className="bg-blue-500 text-white p-2 rounded"
           disabled={isLoading}
         >
           {isLoading ? 'Loading...' : 'Fetch Repos'}

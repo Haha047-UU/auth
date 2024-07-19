@@ -10,18 +10,9 @@ export async function getUserRepos(username: string) {  //根据提供的用户�
     sort: 'updated',
     per_page: 100,
   });
-  const publicRepos: any[] = [];
-  const privateRepos: any[] = [];
 
-  for (const repo of response.data) {
-    if (repo.visibility === 'private') {
-      privateRepos.push(repo);
-    } else {
-      publicRepos.push(repo);
-    }
-  }
+  return response.data;
 
-  return { publicRepos, privateRepos };
 }
 
 export async function getRepoDefaultBranch(owner: string, repo: string) {//获取某个仓库的默认分支名称。owner：仓库的所有者，repo：仓库的名称
