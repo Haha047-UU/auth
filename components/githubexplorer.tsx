@@ -24,27 +24,6 @@ const GithubExplorer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);//指示是否正在加载数据的布尔值
   const [error, setError] = useState<string | null>(null);//存储可能发生的错误信息
 
-  const accessToken = process.env.access_token;
-  const det = async () => {
-
-    if (!accessToken) {
-      window.location.href = '/login';
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      // Simulated private repository data acquisition code
-      console.log('Fetching private repos...');
-      await new Promise<void>(resolve => setTimeout(resolve, 2000));
-    } catch (error) {
-      console.error('Error fetching private repos:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-
   const fetchRepos = async () => {
     if (username) {
       setIsLoading(true);
@@ -136,10 +115,6 @@ const GithubExplorer: React.FC = () => {
       fetchRepoTree(selectedRepo);
     }
   }, [selectedRepo]);
-
-  useEffect(() => {
-    det();
-  }, []);
 
   const Ref = React.useRef<MDXEditorMethods>(null)
 
