@@ -1,19 +1,32 @@
 import { Octokit } from "@octokit/rest";
 
+const accessToken = process.env.access_token;
+if (!accessToken) {
+  console.error("访问令牌未设置。请设置环境变量 'access_token'。");
+  process.exit(1); // 退出进程，防止进一步执行
+}
 const octokit = new Octokit({ auth: process.env.access_token });
 
 export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
-  const response = await octokit.rest.repos.listForUser({
-    username,
-    type: 'all',
-    sort: 'updated',
-    per_page: 100
-  });
+  console.log(`开始获取用户 ${username} 的私有仓库列表`);
 
-  return response.data;
+  try {
+    const response = await octokit.rest.repos.listForUser({
+      username,
+      type: 'all', // 获取用户所有类型的仓库
+      sort: 'updated',
+      per_page: 100
+    });
 
+    const privateRepos = response.data.filter(repo => repo.private);
+    console.log(`成功获取到 ${privateRepos.length} 个私有仓库`);
+    return privateRepos;
+  } catch (error) {
+    console.error(`获取用户 ${username} 的私有仓库列表时发生错误: ${error}`);
+
+    throw error; // 重新抛出错误，以便调用者可以处理
+  }
 }
-
 export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的私有仓库列表。
   const response = await octokit.rest.repos.listForUser({
     username,
