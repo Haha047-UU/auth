@@ -2,6 +2,7 @@ import { Octokit } from "@octokit/rest";
 import { privateDecrypt } from "crypto";
 
 const octokit = new Octokit({ auth: process.env.access_token });
+console.log("secret:", octokit);
 
 export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
   const response = await octokit.rest.repos.listForUser({
