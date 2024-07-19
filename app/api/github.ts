@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/rest";
-import { auth } from "@/auth"
 
-const octokit = new Octokit({ auth: process.env.AUTH_GITHUB_SECRET });
+const octokit = new Octokit({ auth: process.env.access_token });
+
 console.log("secret:", octokit)
 
 export async function getUserRepos(username: string) {
