@@ -7,7 +7,19 @@ if (!accessToken) {
 }
 const octokit = new Octokit({ auth: process.env.access_token });
 
-export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
+export async function getUserRepos(username: string) {
+  const response = await octokit.rest.repos.listForUser({
+    username,
+    type: 'all', // 获取用户拥有的仓库
+    sort: 'updated',
+    per_page: 100
+  });
+
+  return response.data;
+
+} //根据提供的用户名获取用户的仓库列表。
+
+export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的私有仓库列表。
   console.log(`开始获取用户 ${username} 的私有仓库列表`);
 
   try {
@@ -26,17 +38,6 @@ export async function getUserRepos(username: string) {  //根据提供的用户�
 
     throw error; // 重新抛出错误，以便调用者可以处理
   }
-}
-export async function getUserPrivateRepos(username: string) {  //根据提供的用户名获取用户的私有仓库列表。
-  const response = await octokit.rest.repos.listForUser({
-    username,
-    type: 'all', // 获取用户拥有的仓库
-    sort: 'updated',
-    per_page: 100
-  });
-
-  const privateRepos = response.data.filter(repo => repo.private);
-  return privateRepos;
 }
 
 
