@@ -1,13 +1,6 @@
 import { Octokit } from "@octokit/rest";
 
-const accessToken = process.env.access_token;
-if (!accessToken) {
-  console.error('access_token is required');
-  process.exit(1);
-
-}
-
-const octokit = new Octokit({ auth: accessToken });
+const octokit = new Octokit({ auth: process.env.access_token });
 
 export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
   const response = await octokit.rest.repos.listForUser({
