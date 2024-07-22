@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 
-const octokit = new Octokit({ auth: process.env.access_token });
+const octokit = new Octokit({ auth: sessionStorage.getItem('accessToken') });
+
 
 export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
   const response = await octokit.rest.repos.listForUser({

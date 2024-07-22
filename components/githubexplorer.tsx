@@ -7,7 +7,6 @@ import RepoTree from "./RepoTree";
 import '@mdxeditor/editor/style.css'
 import { ForwardRefEditor } from './ForwardRefEditor';
 import { MDXEditorMethods } from '@mdxeditor/editor';
-import { Octokit } from '@octokit/rest';
 
 interface Repo {
   name: string;
