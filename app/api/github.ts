@@ -1,6 +1,12 @@
 import { Octokit } from "@octokit/rest";
 
-const octokit = new Octokit({ auth: process.env.access_token });
+const octokit = new Octokit({
+  auth: {
+    clientType: 'oauth-app',
+    clientId: process.env.AUTH_GITHUB_ID,
+    clientSecret: process.env.AUTH_GITHUB_SECRET
+  }
+})
 
 export async function getUserRepos(username: string) {  //根据提供的用户名获取用户的仓库列表。
   const response = await octokit.rest.repos.listForUser({
